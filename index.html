@@ -25,6 +25,9 @@
   .nav-logo { display: flex; align-items: center; gap: 10px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--white); text-decoration: none; }
   .nav-logo span { color: var(--green); }
   .nav-logo .play-icon { width: 32px; height: 32px; background: var(--green); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-link { color: var(--muted); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .nav-link:hover { color: var(--white); }
   .nav-cta { background: var(--green); color: #000; border: none; padding: 10px 24px; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.2s; text-decoration: none; }
   .nav-cta:hover { background: #22d760; transform: scale(1.03); }
 
@@ -90,13 +93,40 @@
   .pricing-features li:last-child { border-bottom: none; }
   .pricing-features li::before { content: '✓'; color: var(--green); font-weight: 700; font-size: 14px; min-width: 20px; }
 
+  /* FAQ */
+  .faq-section { padding: 100px 60px; max-width: 1100px; margin: 0 auto; }
+  .faq-list { display: flex; flex-direction: column; gap: 2px; }
+  .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 8px; }
+  .faq-question { padding: 24px 28px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 16px; font-weight: 500; color: var(--white); transition: background 0.2s; }
+  .faq-question:hover { background: var(--card2); }
+  .faq-icon { color: var(--green); font-size: 20px; transition: transform 0.3s; }
+  .faq-answer { padding: 0 28px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--muted); font-size: 15px; font-weight: 300; line-height: 1.7; }
+  .faq-item.open .faq-answer { max-height: 200px; padding: 0 28px 24px; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+  /* CONTACT */
+  .contact-section { padding: 100px 60px; max-width: 1100px; margin: 0 auto; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+  .contact-info h3 { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 700; margin-bottom: 16px; color: var(--white); }
+  .contact-info p { color: var(--muted); font-size: 15px; font-weight: 300; line-height: 1.8; margin-bottom: 32px; }
+  .contact-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; display: flex; align-items: center; gap: 16px; margin-bottom: 16px; transition: border-color 0.2s; }
+  .contact-card:hover { border-color: var(--green); }
+  .contact-card-icon { width: 48px; height: 48px; background: rgba(29,185,84,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .contact-card-text strong { display: block; color: var(--white); font-size: 15px; margin-bottom: 4px; }
+  .contact-card-text span { color: var(--green); font-size: 14px; }
+  .contact-card-text a { color: var(--green); font-size: 14px; text-decoration: none; }
+  .contact-card-text a:hover { text-decoration: underline; }
+
   .cta-section { padding: 100px 60px; text-align: center; position: relative; overflow: hidden; }
   .cta-section::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 800px; height: 400px; background: radial-gradient(ellipse, rgba(29,185,84,0.07), transparent 70%); pointer-events: none; }
   .cta-section h2 { max-width: 700px; margin: 0 auto 40px; }
 
-  footer { border-top: 1px solid var(--border); padding: 40px 60px; display: flex; align-items: center; justify-content: space-between; color: var(--muted); font-size: 13px; }
+  footer { border-top: 1px solid var(--border); padding: 40px 60px; display: flex; align-items: center; justify-content: space-between; color: var(--muted); font-size: 13px; flex-wrap: wrap; gap: 16px; }
   .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; color: var(--white); }
   .footer-logo span { color: var(--green); }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { color: var(--muted); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--white); }
 
   @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
   .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
@@ -104,11 +134,13 @@
 
   @media (max-width: 768px) {
     nav { padding: 16px 24px; }
-    section, .how-section, .pricing-section, .cta-section { padding: 60px 24px; }
+    .nav-links { display: none; }
+    section, .how-section, .pricing-section, .cta-section, .faq-section, .contact-section { padding: 60px 24px; }
     .features-grid { grid-template-columns: 1fr; }
     .stats { flex-wrap: wrap; }
     .stat { min-width: 45%; border-right: none; border-bottom: 1px solid var(--border); }
-    footer { flex-direction: column; gap: 16px; text-align: center; }
+    .contact-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; text-align: center; }
   }
 </style>
 </head>
@@ -119,6 +151,12 @@
     <div class="play-icon">▶</div>
     ShortLab <span>AI</span>
   </a>
+  <div class="nav-links">
+    <a href="#funciones" class="nav-link">Funciones</a>
+    <a href="#pricing" class="nav-link">Precio</a>
+    <a href="#faq" class="nav-link">FAQ</a>
+    <a href="#contacto" class="nav-link">Contacto</a>
+  </div>
   <a href="https://buy.stripe.com/fZu3cn9r8eTk0nMbf32go00" class="nav-cta" target="_blank">Comprar — 2.99€/mes</a>
 </nav>
 
@@ -187,6 +225,88 @@
   </div>
 </div>
 
+<!-- FAQ -->
+<div class="faq-section" id="faq">
+  <p class="section-label reveal">FAQ</p>
+  <h2 class="reveal">Preguntas frecuentes</h2>
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <div class="faq-question">¿En qué sistemas operativos funciona ShortLab AI? <span class="faq-icon">+</span></div>
+      <div class="faq-answer">ShortLab AI funciona en Windows 10 y Windows 11. Por el momento no está disponible para Mac ni Linux.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">¿Necesito conocimientos técnicos para usarlo? <span class="faq-icon">+</span></div>
+      <div class="faq-answer">No. ShortLab AI está diseñado para ser fácil de usar. Solo necesitas seguir los pasos de configuración inicial y la app hace el resto automáticamente.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">¿Puedo cambiar el tema de los videos? <span class="faq-icon">+</span></div>
+      <div class="faq-answer">Sí. Puedes cambiar el tema de tus videos en cualquier momento desde el panel de configuración de la app. Solo tienes que hacer clic en el icono de configuración y modificar el campo de tema.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">¿Cómo cancelo mi suscripción? <span class="faq-icon">+</span></div>
+      <div class="faq-answer">Puedes cancelar en cualquier momento enviando un email a soporteshortlabai@gmail.com con tu email de compra. Cancelamos tu suscripción en menos de 24 horas y seguirás teniendo acceso hasta el final del período pagado.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">¿La app necesita estar abierta para publicar videos? <span class="faq-icon">+</span></div>
+      <div class="faq-answer">Sí. ShortLab AI necesita que el ordenador esté encendido y la aplicación abierta para funcionar. Te recomendamos dejarla abierta en segundo plano.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">¿Cuánto tiempo tarda en generarse un video? <span class="faq-icon">+</span></div>
+      <div class="faq-answer">El proceso completo de generación y subida de un video tarda entre 10 y 15 minutos dependiendo de la velocidad de tu ordenador e internet.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">¿Puedo usar ShortLab AI con cualquier canal de YouTube? <span class="faq-icon">+</span></div>
+      <div class="faq-answer">Sí. Puedes conectar cualquier canal de YouTube de tu propiedad. Solo necesitas autorizarlo con tu cuenta de Google durante la configuración inicial.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contacto">
+  <p class="section-label reveal">Contacto</p>
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <h3>¿Tienes alguna pregunta?</h3>
+      <p>Estamos aquí para ayudarte. Si tienes algún problema con la app, quieres cancelar tu suscripción o simplemente tienes una pregunta, escríbenos y te responderemos en menos de 24 horas.</p>
+      <div class="contact-card">
+        <div class="contact-card-icon">✉️</div>
+        <div class="contact-card-text">
+          <strong>Soporte por email</strong>
+          <a href="mailto:soporteshortlabai@gmail.com">soporteshortlabai@gmail.com</a>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">⏱️</div>
+        <div class="contact-card-text">
+          <strong>Tiempo de respuesta</strong>
+          <span>Menos de 24 horas en días laborables</span>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">❌</div>
+        <div class="contact-card-text">
+          <strong>Cancelar suscripción</strong>
+          <span>Escríbenos a soporteshortlabai@gmail.com con tu email de compra</span>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:40px;">
+        <h3 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:700;margin-bottom:24px;color:var(--white);">Escríbenos directamente</h3>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:24px;">Para una respuesta más rápida incluye tu email de compra y una descripción del problema.</p>
+        <a href="mailto:soporteshortlabai@gmail.com?subject=Soporte ShortLab AI" class="btn-primary" style="width:100%;justify-content:center;" target="_blank">
+          ✉️ Enviar email de soporte
+        </a>
+        <div style="margin-top:16px;text-align:center;">
+          <a href="mailto:soporteshortlabai@gmail.com?subject=Cancelar suscripcion ShortLab AI" style="color:var(--muted);font-size:13px;text-decoration:none;" target="_blank">
+            Cancelar suscripción →
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="cta-section">
   <h2 class="reveal">¿Listo para automatizar<br>tu canal de YouTube?</h2>
   <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
@@ -197,10 +317,18 @@
 
 <footer>
   <div class="footer-logo">ShortLab <span>AI</span></div>
+  <div class="footer-links">
+    <a href="#funciones">Funciones</a>
+    <a href="#pricing">Precio</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contacto">Contacto</a>
+    <a href="mailto:soporteshortlabai@gmail.com">soporteshortlabai@gmail.com</a>
+  </div>
   <div>© 2026 ShortLab AI · Todos los derechos reservados</div>
 </footer>
 
 <script>
+  // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
@@ -208,6 +336,16 @@
     });
   }, { threshold: 0.1 });
   reveals.forEach(el => observer.observe(el));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
 </script>
 </body>
 </html>
