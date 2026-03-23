@@ -824,6 +824,193 @@ footer {
   h2 { font-size: 32px; letter-spacing: -1px; }
   .testi-card { min-width: 300px; max-width: 300px; }
 }
+
+/* =============================================
+   MODAL DESISTIMIENTO
+============================================= */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 10000;
+  background: rgba(0,0,0,0.88); backdrop-filter: blur(10px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+.modal-box {
+  background: var(--card);
+  border: 1px solid var(--border-green);
+  border-radius: 24px; padding: 48px;
+  max-width: 560px; width: 100%;
+  position: relative;
+  animation: slideUp 0.3s ease;
+}
+@keyframes slideUp {
+  from { opacity:0; transform: translateY(24px); }
+  to { opacity:1; transform: translateY(0); }
+}
+.modal-close {
+  position: absolute; top: 20px; right: 20px;
+  width: 36px; height: 36px;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  cursor: none; color: var(--muted2); transition: all 0.2s;
+}
+.modal-close:hover { border-color: var(--green); color: var(--green); }
+.modal-check-label {
+  display: flex; gap: 14px; align-items: flex-start;
+  cursor: none; padding: 16px; border-radius: 12px;
+  border: 1px solid var(--border); transition: border-color 0.2s, background 0.2s;
+  margin-bottom: 24px;
+}
+.modal-check-label:has(input:checked) { border-color: var(--border-green); background: var(--green-dim); }
+.modal-check-label input[type="checkbox"] {
+  width: 18px; height: 18px; min-width: 18px;
+  accent-color: var(--green); cursor: none; margin-top: 2px;
+}
+.modal-check-label span { font-size: 13.5px; color: var(--text); line-height: 1.65; }
+.modal-email-field {
+  width: 100%; padding: 14px 18px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 12px; color: var(--text);
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14.5px;
+  outline: none; transition: border-color 0.2s; margin-bottom: 20px;
+}
+.modal-email-field:focus { border-color: var(--green); }
+.modal-email-field::placeholder { color: var(--muted); }
+.modal-actions { display: flex; gap: 12px; }
+.btn-modal-continue {
+  flex: 1; background: var(--green); color: #000;
+  padding: 14px 24px; border-radius: 100px;
+  font-weight: 700; font-size: 14.5px; border: none; cursor: none;
+  transition: all 0.25s; display: flex; align-items: center; justify-content: center; gap: 8px;
+  opacity: 0.4; pointer-events: none;
+}
+.btn-modal-continue.active { opacity: 1; pointer-events: auto; }
+.btn-modal-continue.active:hover { background: #22d760; transform: scale(1.02); }
+.btn-modal-cancel {
+  padding: 14px 20px; border-radius: 100px;
+  background: transparent; border: 1px solid var(--border);
+  color: var(--muted2); font-size: 14px; cursor: none; transition: all 0.2s;
+}
+.btn-modal-cancel:hover { border-color: var(--muted); color: var(--text); }
+
+/* =============================================
+   PORTAL DE CLIENTE
+============================================= */
+.portal-section { padding: 120px 0; width: 100%; }
+.portal-tabs { display: flex; gap: 8px; margin-bottom: 48px; flex-wrap: wrap; }
+.portal-tab {
+  padding: 11px 22px; border-radius: 100px;
+  background: var(--bg3); border: 1px solid var(--border);
+  font-size: 14px; font-weight: 600; color: var(--muted2);
+  cursor: none; transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 7px;
+}
+.portal-tab.active { background: var(--green-dim); border-color: var(--border-green); color: var(--green); }
+.portal-tab:hover:not(.active) { border-color: var(--muted); color: var(--text); }
+.portal-panel { display: none; }
+.portal-panel.active { display: block; }
+.portal-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 24px; padding: 48px; max-width: 560px;
+}
+.portal-card h3 {
+  font-family: 'Syne', sans-serif; font-size: 22px;
+  font-weight: 700; margin-bottom: 8px;
+}
+.portal-card > p { color: var(--muted2); font-size: 14.5px; margin-bottom: 32px; font-weight: 300; line-height: 1.7; }
+.form-field { margin-bottom: 18px; }
+.form-field label {
+  display: block; font-size: 12px; font-weight: 700;
+  color: var(--muted2); letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.form-input {
+  width: 100%; padding: 14px 18px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 12px; color: var(--text);
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14.5px;
+  outline: none; transition: border-color 0.2s;
+}
+.form-input:focus { border-color: var(--green); }
+.form-input::placeholder { color: var(--muted); }
+.btn-portal {
+  width: 100%; background: var(--green); color: #000;
+  padding: 15px 24px; border-radius: 100px;
+  font-weight: 700; font-size: 15px; border: none; cursor: none;
+  transition: all 0.25s; display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin-top: 8px;
+}
+.btn-portal:hover { background: #22d760; transform: scale(1.01); }
+.btn-portal:disabled { opacity: 0.45; pointer-events: none; }
+.portal-result { margin-top: 28px; display: none; }
+.portal-status-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 16px; padding: 28px;
+}
+.portal-status-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.portal-status-row:last-child { border-bottom: none; }
+.portal-status-key { color: var(--muted2); font-weight: 300; }
+.portal-status-val { font-weight: 600; color: var(--text); }
+.badge-active {
+  color: var(--green); background: var(--green-dim);
+  border: 1px solid var(--border-green); padding: 3px 12px;
+  border-radius: 100px; font-size: 12px; font-weight: 700;
+}
+.badge-expired {
+  color: #f59e0b; background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.25); padding: 3px 12px;
+  border-radius: 100px; font-size: 12px; font-weight: 700;
+}
+.badge-trial {
+  color: #60a5fa; background: rgba(96,165,250,0.1);
+  border: 1px solid rgba(96,165,250,0.25); padding: 3px 12px;
+  border-radius: 100px; font-size: 12px; font-weight: 700;
+}
+.btn-cancel-sub {
+  margin-top: 20px; width: 100%;
+  padding: 13px 24px; border-radius: 100px;
+  background: transparent; border: 1px solid rgba(239,68,68,0.35);
+  color: #ef4444; font-size: 14px; font-weight: 600;
+  cursor: none; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn-cancel-sub:hover { background: rgba(239,68,68,0.08); border-color: #ef4444; }
+.portal-msg {
+  padding: 14px 18px; border-radius: 12px;
+  font-size: 14px; line-height: 1.6; margin-top: 16px; display: none;
+}
+.portal-msg.ok { background: var(--green-dim); border: 1px solid var(--border-green); color: var(--green); }
+.portal-msg.err { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25); color: #ef4444; }
+.trial-form-check {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 14px 16px; border-radius: 12px;
+  border: 1px solid var(--border); margin-bottom: 16px;
+  transition: border-color 0.2s, background 0.2s; cursor: none;
+}
+.trial-form-check:has(input:checked) { border-color: var(--border-green); background: var(--green-dim); }
+.trial-form-check input[type="checkbox"] {
+  width: 16px; height: 16px; min-width: 16px;
+  accent-color: var(--green); cursor: none; margin-top: 3px;
+}
+.trial-form-check span { font-size: 13px; color: var(--muted2); line-height: 1.65; }
+.trial-confirm-msg {
+  background: var(--green-dim); border: 1px solid var(--border-green);
+  border-radius: 12px; padding: 16px 18px;
+  font-size: 14px; color: var(--green); display: none; margin-top: 12px; line-height: 1.6;
+}
+.trial-error-msg {
+  background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25);
+  border-radius: 12px; padding: 16px 18px;
+  font-size: 14px; color: #ef4444; display: none; margin-top: 12px;
+}
+@media (max-width: 960px) {
+  .portal-card { padding: 28px 20px; }
+  .modal-box { padding: 32px 24px; }
+}
 </style>
 </head>
 <body>
@@ -846,10 +1033,11 @@ footer {
     <a href="#precio" class="nav-link" data-i18n="nav_price">Precio</a>
     <a href="#faq" class="nav-link" data-i18n="nav_faq">FAQ</a>
     <a href="#contacto" class="nav-link">Contacto</a>
+    <a href="#mi-licencia" class="nav-link">Mi licencia</a>
   </div>
   <div class="nav-right">
     <a href="https://www.instagram.com/shortlabai3?igsh=cjdwOTF3bmxndXJn" class="social-link-nav" target="_blank" aria-label="Instagram">
-      <i data-lucide="instagram" width="15" height="15"></i>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
     </a>
     <a href="https://www.tiktok.com/@shortlabai3" class="social-link-nav" target="_blank" aria-label="TikTok">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.73a4.85 4.85 0 0 1-1.01-.04z"/></svg>
@@ -898,6 +1086,10 @@ footer {
       <a href="https://github.com/bcosciug/shortlab-web/releases/download/v.2.0.1/ShortLab.AI.exe" class="btn-primary" style="background:#158a3e;" target="_blank">
         <i data-lucide="download" width="18" height="18"></i>
         <span data-i18n="btn_download">Descargar gratis</span>
+      </a>
+      <a href="#mi-licencia" class="btn-primary" id="btn-hero-prueba" style="background:transparent;border:1.5px solid var(--green);color:var(--green);">
+        <i data-lucide="gift" width="18" height="18"></i>
+        <span>Prueba gratuita 7 días</span>
       </a>
     </div>
     <p class="hero-price" data-i18n="hero_price">Solo <strong>7.99€/mes</strong> &nbsp;·&nbsp; Sin permanencia &nbsp;·&nbsp; Cancela cuando quieras</p>
@@ -1260,6 +1452,98 @@ footer {
 
 
 <!-- =============================================
+     MI LICENCIA / PORTAL DE CLIENTE
+============================================= -->
+<section class="portal-section" id="mi-licencia"><div class="section-inner">
+  <div class="section-tag reveal">Mi cuenta</div>
+  <h2 class="reveal">Gestiona tu<br><em>suscripción</em></h2>
+
+  <div class="portal-tabs reveal">
+    <button class="portal-tab active" data-tab="consultar">
+      <i data-lucide="key" width="15" height="15"></i> Consultar licencia
+    </button>
+    <button class="portal-tab" data-tab="prueba">
+      <i data-lucide="gift" width="15" height="15"></i> Prueba gratuita 7 días
+    </button>
+  </div>
+
+  <!-- Panel: Consultar licencia -->
+  <div class="portal-panel active" id="panel-consultar">
+    <div class="portal-card">
+      <h3>Estado de tu licencia</h3>
+      <p>Introduce tu email y clave de licencia para ver el estado de tu suscripción y gestionarla.</p>
+      <div class="form-field">
+        <label>Email</label>
+        <input type="email" id="portal-email" class="form-input" placeholder="tu@email.com" autocomplete="email">
+      </div>
+      <div class="form-field">
+        <label>Clave de licencia</label>
+        <input type="text" id="portal-clave" class="form-input" placeholder="XXXX-XXXX-XXXX-XXXX" autocomplete="off">
+      </div>
+      <button class="btn-portal" id="btn-consultar-licencia">
+        <i data-lucide="search" width="16" height="16"></i>
+        Consultar licencia
+      </button>
+      <div class="portal-msg" id="portal-consultar-msg"></div>
+      <div class="portal-result" id="portal-result">
+        <div class="portal-status-card">
+          <div class="portal-status-row">
+            <span class="portal-status-key">Estado</span>
+            <span class="portal-status-val" id="res-estado">—</span>
+          </div>
+          <div class="portal-status-row">
+            <span class="portal-status-key">Plan</span>
+            <span class="portal-status-val" id="res-plan">—</span>
+          </div>
+          <div class="portal-status-row">
+            <span class="portal-status-key">Email registrado</span>
+            <span class="portal-status-val" id="res-email">—</span>
+          </div>
+          <div class="portal-status-row">
+            <span class="portal-status-key">Expira el</span>
+            <span class="portal-status-val" id="res-expira">—</span>
+          </div>
+          <div class="portal-status-row">
+            <span class="portal-status-key">Activaciones</span>
+            <span class="portal-status-val" id="res-activaciones">—</span>
+          </div>
+        </div>
+        <button class="btn-cancel-sub" id="btn-cancelar-sub">
+          <i data-lucide="x-circle" width="16" height="16"></i>
+          Cancelar mi suscripción
+        </button>
+        <div class="portal-msg" id="portal-cancel-msg"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel: Prueba gratuita -->
+  <div class="portal-panel" id="panel-prueba">
+    <div class="portal-card">
+      <h3>Prueba gratuita 7 días</h3>
+      <p>Sin tarjeta de crédito. Introduce tu email y recibirás tu clave de licencia de prueba en breves minutos.</p>
+      <div class="form-field">
+        <label>Tu email</label>
+        <input type="email" id="trial-email" class="form-input" placeholder="tu@email.com" autocomplete="email">
+      </div>
+      <label class="trial-form-check" id="trial-check-wrap">
+        <input type="checkbox" id="trial-desistimiento-chk">
+        <span>Entiendo y acepto que, al tratarse de un servicio digital que comienza inmediatamente, renuncio expresamente a mi derecho de desistimiento de 14 días conforme al artículo 103 de la Ley General para la Defensa de los Consumidores y Usuarios.</span>
+      </label>
+      <button class="btn-portal" id="btn-solicitar-prueba" disabled>
+        <i data-lucide="gift" width="16" height="16"></i>
+        Solicitar prueba gratuita
+      </button>
+      <div class="trial-confirm-msg" id="trial-confirm">
+        ✅ ¡Solicitud enviada! Recibirás tu clave de licencia en tu email en breves minutos. Revisa también la carpeta de spam.
+      </div>
+      <div class="trial-error-msg" id="trial-error"></div>
+    </div>
+  </div>
+
+</div></section>
+
+<!-- =============================================
      CONTACTO & SOPORTE
 ============================================= -->
 <section class="features-section" id="contacto"><div class="section-inner">
@@ -1296,7 +1580,10 @@ footer {
       <div class="support-icon"><i data-lucide="gift" width="22" height="22"></i></div>
       <div class="support-content">
         <h3>Prueba gratuita 7 días</h3>
-        <p>Contáctanos en <a href="mailto:soporte@shortlabai.com?subject=Prueba gratuita ShortLab AI">soporte@shortlabai.com</a> con el asunto <strong style="color:var(--text)">"Prueba gratuita"</strong> y te activamos 7 días gratis sin tarjeta.</p>
+        <p>Sin tarjeta de crédito. Solicítala directamente desde la web o escríbenos a <a href="mailto:soporte@shortlabai.com?subject=Prueba gratuita ShortLab AI">soporte@shortlabai.com</a>.</p>
+        <a href="#mi-licencia" class="btn-portal" id="btn-ir-prueba" style="margin-top:14px;display:inline-flex;width:auto;padding:10px 22px;font-size:13.5px;">
+          <i data-lucide="gift" width="14" height="14"></i> Solicitar prueba gratuita
+        </a>
       </div>
     </div>
 
@@ -1323,6 +1610,38 @@ footer {
     </div>
   </div>
 </div></section>
+
+<!-- =============================================
+     MODAL DESISTIMIENTO (CHECKOUT)
+============================================= -->
+<div id="modal-desistimiento" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="modal-desistimiento-title">
+  <div class="modal-box">
+    <button class="modal-close" id="modal-close-btn" aria-label="Cerrar">
+      <i data-lucide="x" width="16" height="16"></i>
+    </button>
+    <div class="section-tag" style="margin-bottom:16px;">Antes de continuar</div>
+    <h3 id="modal-desistimiento-title" style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:10px;letter-spacing:-0.5px;">Derecho de desistimiento</h3>
+    <p style="color:var(--muted2);font-size:14px;font-weight:300;line-height:1.7;margin-bottom:20px;">Conforme a la normativa europea, al ser un servicio digital que se activa inmediatamente, debes confirmar que renuncias al derecho de desistimiento de 14 días antes de proceder al pago.</p>
+    <div style="margin-bottom:6px;">
+      <label style="display:block;font-size:12px;font-weight:700;color:var(--muted2);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">Tu email de compra</label>
+      <input type="email" id="modal-desistimiento-email" class="modal-email-field" placeholder="tu@email.com" autocomplete="email">
+    </div>
+    <label class="modal-check-label" id="modal-check-wrap">
+      <input type="checkbox" id="modal-desistimiento-chk">
+      <span>Entiendo y acepto que, al tratarse de un servicio digital que comienza inmediatamente, renuncio expresamente a mi derecho de desistimiento de 14 días conforme al artículo 103 de la Ley General para la Defensa de los Consumidores y Usuarios.</span>
+    </label>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" id="btn-modal-cancelar">Cancelar</button>
+      <button class="btn-modal-continue" id="btn-modal-continuar">
+        <i data-lucide="lock" width="16" height="16"></i>
+        Continuar al pago
+      </button>
+    </div>
+    <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:16px;">
+      Pago seguro con <strong style="color:var(--text)">Stripe</strong> · Cifrado SSL
+    </p>
+  </div>
+</div>
 
 <!-- =============================================
      FOOTER
@@ -1354,6 +1673,7 @@ footer {
         <li><a href="#funciones">Funciones</a></li>
         <li><a href="#como-funciona">Cómo funciona</a></li>
         <li><a href="#precio">Precio</a></li>
+        <li><a href="#mi-licencia">Mi licencia</a></li>
         <li><a href="https://github.com/bcosciug/shortlab-web/releases/download/v.2.0.1/ShortLab.AI.exe" target="_blank">Descargar .exe</a></li>
         <li><a href="https://shortlabai.com/manual.pdf" target="_blank">Manual de instalación</a></li>
       </ul>
@@ -1599,6 +1919,273 @@ window.addEventListener('scroll', () => {
   document.querySelector('.blob1').style.transform = `translateY(${y * 0.15}px)`;
   document.querySelector('.blob2').style.transform = `translateY(${-y * 0.1}px)`;
 }, { passive: true });
+
+// ─────────────────────────────────────────────────
+// PORTAL DE CLIENTE + PRUEBA GRATUITA + DESISTIMIENTO
+// ─────────────────────────────────────────────────
+const API_BASE = 'https://web-production-995b.up.railway.app';
+
+// ── Tabs del portal ──
+document.querySelectorAll('.portal-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.portal-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.portal-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    const panel = document.getElementById('panel-' + tab.dataset.tab);
+    if (panel) panel.classList.add('active');
+    lucide.createIcons();
+  });
+});
+
+// Botón "Solicitar prueba gratuita" en Contacto → navega a sección y activa tab
+function irAPrueba(e) {
+  e.preventDefault();
+  const tabPrueba = document.querySelector('[data-tab="prueba"]');
+  if (tabPrueba) tabPrueba.click();
+  const section = document.getElementById('mi-licencia');
+  if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+const btnIrPrueba = document.getElementById('btn-ir-prueba');
+if (btnIrPrueba) btnIrPrueba.addEventListener('click', irAPrueba);
+const btnHeroPrueba = document.getElementById('btn-hero-prueba');
+if (btnHeroPrueba) btnHeroPrueba.addEventListener('click', irAPrueba);
+
+// ── Consultar licencia ──
+document.getElementById('btn-consultar-licencia').addEventListener('click', async () => {
+  const email = document.getElementById('portal-email').value.trim();
+  const clave = document.getElementById('portal-clave').value.trim();
+  const msg = document.getElementById('portal-consultar-msg');
+  const result = document.getElementById('portal-result');
+
+  if (!email || !clave) {
+    msg.className = 'portal-msg err';
+    msg.textContent = 'Introduce tu email y tu clave de licencia.';
+    msg.style.display = 'block'; return;
+  }
+
+  const btn = document.getElementById('btn-consultar-licencia');
+  btn.disabled = true;
+  btn.innerHTML = '<i data-lucide="loader" width="16" height="16"></i> Consultando...';
+  lucide.createIcons();
+  msg.style.display = 'none'; result.style.display = 'none';
+
+  try {
+    const res = await fetch(API_BASE + '/api/portal/estado', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, clave_licencia: clave })
+    });
+    const data = await res.json();
+    if (res.ok && data.estado) {
+      document.getElementById('res-plan').textContent = data.plan || 'PRO';
+      document.getElementById('res-email').textContent = data.email || email;
+      const expFecha = data.fecha_expiracion
+        ? new Date(data.fecha_expiracion).toLocaleDateString('es-ES', { day:'2-digit', month:'long', year:'numeric' })
+        : '—';
+      document.getElementById('res-expira').textContent = expFecha;
+      const act = data.activaciones_actuales !== undefined
+        ? `${data.activaciones_actuales} / ${data.max_activaciones || 1}`
+        : '—';
+      document.getElementById('res-activaciones').textContent = act;
+      const estadoEl = document.getElementById('res-estado');
+      if (data.estado === 'activa') {
+        estadoEl.innerHTML = '<span class="badge-active">Activa</span>';
+      } else if (data.estado === 'prueba') {
+        estadoEl.innerHTML = '<span class="badge-trial">Prueba gratuita</span>';
+      } else {
+        estadoEl.innerHTML = '<span class="badge-expired">Expirada</span>';
+      }
+      result.style.display = 'block';
+      document.getElementById('btn-cancelar-sub').dataset.email = email;
+      document.getElementById('btn-cancelar-sub').dataset.clave = clave;
+      lucide.createIcons();
+    } else {
+      msg.className = 'portal-msg err';
+      msg.textContent = data.error || 'Licencia no encontrada. Verifica el email y la clave.';
+      msg.style.display = 'block';
+    }
+  } catch(e) {
+    msg.className = 'portal-msg err';
+    msg.textContent = 'Error de conexión con el servidor. Inténtalo de nuevo.';
+    msg.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i data-lucide="search" width="16" height="16"></i> Consultar licencia';
+    lucide.createIcons();
+  }
+});
+
+// ── Cancelar suscripción ──
+document.getElementById('btn-cancelar-sub').addEventListener('click', async function() {
+  const email = this.dataset.email;
+  const clave = this.dataset.clave;
+  const cancelMsg = document.getElementById('portal-cancel-msg');
+  if (!confirm('¿Seguro que quieres cancelar tu suscripción?\n\nSeguirás teniendo acceso hasta el final del período ya pagado.')) return;
+  this.disabled = true;
+  this.innerHTML = '<i data-lucide="loader" width="16" height="16"></i> Procesando...';
+  lucide.createIcons();
+  cancelMsg.style.display = 'none';
+  try {
+    const res = await fetch(API_BASE + '/api/portal/cancelar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, clave_licencia: clave })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      cancelMsg.className = 'portal-msg ok';
+      cancelMsg.textContent = '✅ Suscripción cancelada correctamente. Seguirás teniendo acceso hasta el fin del período pagado. Hemos enviado confirmación a tu email.';
+      cancelMsg.style.display = 'block';
+      this.style.display = 'none';
+      document.getElementById('res-estado').innerHTML = '<span class="badge-expired">Cancelada</span>';
+    } else {
+      cancelMsg.className = 'portal-msg err';
+      cancelMsg.textContent = data.error || 'No se pudo cancelar. Escríbenos a soporte@shortlabai.com.';
+      cancelMsg.style.display = 'block';
+      this.disabled = false;
+      this.innerHTML = '<i data-lucide="x-circle" width="16" height="16"></i> Cancelar mi suscripción';
+      lucide.createIcons();
+    }
+  } catch(e) {
+    cancelMsg.className = 'portal-msg err';
+    cancelMsg.textContent = 'Error de conexión. Escríbenos a soporte@shortlabai.com.';
+    cancelMsg.style.display = 'block';
+    this.disabled = false;
+    this.innerHTML = '<i data-lucide="x-circle" width="16" height="16"></i> Cancelar mi suscripción';
+    lucide.createIcons();
+  }
+});
+
+// ── Prueba gratuita: habilitar botón solo si checkbox marcado ──
+document.getElementById('trial-desistimiento-chk').addEventListener('change', function() {
+  document.getElementById('btn-solicitar-prueba').disabled = !this.checked;
+});
+
+// ── Solicitar prueba gratuita ──
+document.getElementById('btn-solicitar-prueba').addEventListener('click', async () => {
+  const email = document.getElementById('trial-email').value.trim();
+  const confirmEl = document.getElementById('trial-confirm');
+  const errorEl = document.getElementById('trial-error');
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errorEl.textContent = 'Introduce un email válido para continuar.';
+    errorEl.style.display = 'block'; confirmEl.style.display = 'none'; return;
+  }
+  const btn = document.getElementById('btn-solicitar-prueba');
+  btn.disabled = true;
+  btn.innerHTML = '<i data-lucide="loader" width="16" height="16"></i> Enviando solicitud...';
+  lucide.createIcons();
+  confirmEl.style.display = 'none'; errorEl.style.display = 'none';
+  try {
+    const res = await fetch(API_BASE + '/api/prueba-gratuita', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      confirmEl.style.display = 'block';
+      btn.style.display = 'none';
+      document.getElementById('trial-check-wrap').style.display = 'none';
+      document.getElementById('trial-email').disabled = true;
+      errorEl.style.display = 'none';
+    } else {
+      errorEl.textContent = data.error || 'Error al enviar la solicitud. Inténtalo de nuevo.';
+      errorEl.style.display = 'block';
+      btn.disabled = false;
+      btn.innerHTML = '<i data-lucide="gift" width="16" height="16"></i> Solicitar prueba gratuita';
+      lucide.createIcons();
+    }
+  } catch(e) {
+    errorEl.textContent = 'Error de conexión. Escríbenos a soporte@shortlabai.com.';
+    errorEl.style.display = 'block';
+    btn.disabled = false;
+    btn.innerHTML = '<i data-lucide="gift" width="16" height="16"></i> Solicitar prueba gratuita';
+    lucide.createIcons();
+  }
+});
+
+// ─────────────────────────────────────────────────
+// MODAL DE DESISTIMIENTO — Checkout Stripe
+// ─────────────────────────────────────────────────
+let pendingStripeUrl = '';
+
+function openDesistimientoModal(stripeUrl) {
+  pendingStripeUrl = stripeUrl;
+  document.getElementById('modal-desistimiento-chk').checked = false;
+  document.getElementById('modal-desistimiento-email').value = '';
+  document.getElementById('modal-desistimiento-email').style.borderColor = '';
+  document.getElementById('btn-modal-continuar').classList.remove('active');
+  document.getElementById('modal-desistimiento').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  lucide.createIcons();
+}
+
+function closeDesistimientoModal() {
+  document.getElementById('modal-desistimiento').style.display = 'none';
+  document.body.style.overflow = '';
+  pendingStripeUrl = '';
+}
+
+// Interceptar todos los links de Stripe en la página
+document.querySelectorAll('a[href*="buy.stripe.com"]').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    openDesistimientoModal(this.href);
+  });
+});
+
+// Activar botón "Continuar al pago" solo con checkbox marcado
+document.getElementById('modal-desistimiento-chk').addEventListener('change', function() {
+  document.getElementById('btn-modal-continuar').classList.toggle('active', this.checked);
+});
+
+// Cerrar modal
+document.getElementById('modal-close-btn').addEventListener('click', closeDesistimientoModal);
+document.getElementById('btn-modal-cancelar').addEventListener('click', closeDesistimientoModal);
+document.getElementById('modal-desistimiento').addEventListener('click', function(e) {
+  if (e.target === this) closeDesistimientoModal();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeDesistimientoModal();
+});
+
+// Continuar al pago: registrar desistimiento y redirigir
+document.getElementById('btn-modal-continuar').addEventListener('click', async function() {
+  if (!this.classList.contains('active')) return;
+  const email = document.getElementById('modal-desistimiento-email').value.trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    const emailField = document.getElementById('modal-desistimiento-email');
+    emailField.style.borderColor = '#ef4444';
+    emailField.focus();
+    setTimeout(() => { emailField.style.borderColor = ''; }, 2500);
+    return;
+  }
+  this.innerHTML = '<i data-lucide="loader" width="16" height="16"></i> Registrando...';
+  this.disabled = true;
+  lucide.createIcons();
+  try {
+    const res = await fetch(API_BASE + '/api/desistimiento', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        tipo: 'pago',
+        fecha_aceptacion: new Date().toISOString(),
+        aceptado: true
+      })
+    });
+    if (!res.ok) {
+      // Si el servidor falla, no bloqueamos al usuario pero registramos el error
+      console.warn('Desistimiento no registrado en servidor (status:', res.status, ')');
+    }
+  } catch(e) {
+    console.warn('No se pudo contactar el servidor para registrar desistimiento:', e);
+  }
+  // Redirigir a Stripe siempre, incluso si el registro falla
+  const url = pendingStripeUrl;
+  closeDesistimientoModal();
+  window.open(url, '_blank');
+});
 
 
 // ── i18n Translations ──
