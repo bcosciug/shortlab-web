@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShortLab AI — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #050505;
+  --bg2: #0d0d0d;
+  --card: #111;
+  --card2: #181818;
+  --border: rgba(255,255,255,0.07);
+  --green: #1DB954;
+  --green-dim: rgba(29,185,84,0.12);
+  --green-glow: rgba(29,185,84,0.35);
+  --red: #ef4444;
+  --orange: #f97316;
+  --blue: #3b82f6;
+  --text: #f0f0f0;
+  --muted: #555;
+  --muted2: #888;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; min-height: 100vh; overflow-x: hidden; }
+
+/* LOGIN */
+.login-wrap {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: radial-gradient(ellipse at 50% 0%, rgba(29,185,84,0.08), transparent 60%);
+}
+.login-card {
+  background: var(--card); border: 1px solid rgba(29,185,84,0.2);
+  border-radius: 24px; padding: 52px 48px; width: 100%; max-width: 400px;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+}
+.login-logo { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--green); margin-bottom: 6px; }
+.login-sub { color: var(--muted2); font-size: 13px; margin-bottom: 36px; font-weight: 300; }
+.login-input {
+  width: 100%; padding: 14px 18px; background: var(--bg2);
+  border: 1px solid var(--border); border-radius: 12px; color: var(--text);
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px;
+  outline: none; transition: border-color 0.2s; margin-bottom: 16px;
+}
+.login-input:focus { border-color: var(--green); }
+.login-input::placeholder { color: var(--muted); }
+.btn-login {
+  width: 100%; background: var(--green); color: #000;
+  padding: 14px; border-radius: 100px; border: none;
+  font-weight: 700; font-size: 15px; cursor: pointer; transition: all 0.2s;
+}
+.btn-login:hover { background: #22d760; transform: scale(1.02); }
+.login-err { color: var(--red); font-size: 13px; margin-top: 10px; min-height: 18px; }
+
+/* LAYOUT */
+.app { display: none; min-height: 100vh; }
+.app.visible { display: flex; }
+.sidebar {
+  width: 240px; min-height: 100vh; background: var(--card);
+  border-right: 1px solid var(--border); display: flex; flex-direction: column;
+  position: fixed; top: 0; left: 0; bottom: 0; z-index: 10;
+}
+.sidebar-logo {
+  padding: 28px 24px 20px;
+  font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800;
+  color: var(--green); border-bottom: 1px solid var(--border);
+}
+.sidebar-logo span { color: var(--muted2); font-size: 11px; font-weight: 400; display: block; margin-top: 2px; font-family: 'Plus Jakarta Sans', sans-serif; }
+.sidebar-nav { flex: 1; padding: 16px 12px; display: flex; flex-direction: column; gap: 4px; }
+.nav-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 14px; border-radius: 10px; cursor: pointer;
+  color: var(--muted2); font-size: 13.5px; font-weight: 500;
+  transition: all 0.15s; border: 1px solid transparent;
+}
+.nav-item:hover { background: var(--card2); color: var(--text); }
+.nav-item.active { background: var(--green-dim); color: var(--green); border-color: rgba(29,185,84,0.15); }
+.nav-icon { font-size: 16px; width: 20px; text-align: center; }
+.sidebar-footer { padding: 16px 24px; border-top: 1px solid var(--border); }
+.btn-logout { color: var(--muted2); font-size: 13px; cursor: pointer; transition: color 0.2s; background: none; border: none; display: flex; align-items: center; gap: 8px; }
+.btn-logout:hover { color: var(--red); }
+
+/* MAIN */
+.main { margin-left: 240px; flex: 1; min-height: 100vh; }
+.topbar {
+  padding: 20px 36px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--card); position: sticky; top: 0; z-index: 5;
+}
+.topbar-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; }
+.topbar-badge {
+  background: var(--green-dim); border: 1px solid rgba(29,185,84,0.2);
+  color: var(--green); padding: 5px 14px; border-radius: 100px;
+  font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px;
+}
+.topbar-badge::before { content: ''; width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
+.content { padding: 36px; }
+
+/* PANELS */
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* STATS GRID */
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+.stat-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 24px 28px;
+  transition: border-color 0.2s;
+}
+.stat-card:hover { border-color: rgba(29,185,84,0.2); }
+.stat-label { font-size: 11px; color: var(--muted2); letter-spacing: 1px; text-transform: uppercase; font-weight: 600; margin-bottom: 10px; }
+.stat-value { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; line-height: 1; }
+.stat-value.green { color: var(--green); }
+.stat-value.blue { color: var(--blue); }
+.stat-value.orange { color: var(--orange); }
+.stat-value.red { color: var(--red); }
+
+/* TABLE */
+.table-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.table-header {
+  padding: 20px 28px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.table-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; }
+.btn-refresh {
+  background: var(--card2); border: 1px solid var(--border);
+  color: var(--muted2); padding: 7px 14px; border-radius: 8px;
+  font-size: 12px; cursor: pointer; transition: all 0.2s;
+}
+.btn-refresh:hover { border-color: var(--green); color: var(--green); }
+table { width: 100%; border-collapse: collapse; }
+thead th {
+  padding: 12px 20px; text-align: left;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.8px;
+  text-transform: uppercase; color: var(--muted2);
+  border-bottom: 1px solid var(--border); background: var(--bg2);
+}
+tbody tr { transition: background 0.15s; }
+tbody tr:hover { background: var(--card2); }
+tbody td {
+  padding: 14px 20px; font-size: 13px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-family: 'JetBrains Mono', monospace; font-weight: 400;
+}
+tbody tr:last-child td { border-bottom: none; }
+.badge {
+  display: inline-flex; padding: 3px 10px; border-radius: 100px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.3px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.badge-activa { background: rgba(29,185,84,0.12); color: var(--green); border: 1px solid rgba(29,185,84,0.2); }
+.badge-prueba { background: rgba(59,130,246,0.12); color: var(--blue); border: 1px solid rgba(59,130,246,0.2); }
+.badge-revocada, .badge-cancelada, .badge-expirada { background: rgba(239,68,68,0.1); color: var(--red); border: 1px solid rgba(239,68,68,0.2); }
+.badge-pro { background: rgba(249,115,22,0.1); color: var(--orange); border: 1px solid rgba(249,115,22,0.2); }
+
+/* FORMS */
+.form-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 36px; max-width: 520px; }
+.form-card h3 { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+.form-card p { color: var(--muted2); font-size: 13px; margin-bottom: 28px; font-weight: 300; line-height: 1.7; }
+.form-label { display: block; font-size: 11px; font-weight: 700; color: var(--muted2); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+.form-input {
+  width: 100%; padding: 13px 16px; background: var(--bg2);
+  border: 1px solid var(--border); border-radius: 10px; color: var(--text);
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px;
+  outline: none; transition: border-color 0.2s; margin-bottom: 20px;
+}
+.form-input:focus { border-color: var(--green); }
+.form-input::placeholder { color: var(--muted); }
+.form-result {
+  padding: 14px 18px; border-radius: 10px;
+  font-size: 13px; line-height: 1.6; margin-top: 4px;
+  font-family: 'JetBrains Mono', monospace; display: none;
+}
+.form-result.ok { background: var(--green-dim); border: 1px solid rgba(29,185,84,0.2); color: var(--green); }
+.form-result.err { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); color: var(--red); }
+
+/* BUTTONS */
+.btn {
+  padding: 12px 24px; border-radius: 100px; border: none;
+  font-weight: 700; font-size: 13.5px; cursor: pointer;
+  transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-green { background: var(--green); color: #000; }
+.btn-green:hover { background: #22d760; transform: scale(1.02); }
+.btn-orange { background: var(--orange); color: #fff; }
+.btn-orange:hover { background: #ea6d20; transform: scale(1.02); }
+.btn-blue { background: var(--blue); color: #fff; }
+.btn-blue:hover { background: #2563eb; transform: scale(1.02); }
+.btn-red { background: var(--red); color: #fff; }
+.btn-red:hover { background: #dc2626; transform: scale(1.02); }
+.btn:disabled { opacity: 0.5; pointer-events: none; }
+
+/* LOADING */
+.loading { text-align: center; padding: 60px; color: var(--muted2); font-size: 13px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--green); border-radius: 50%; animation: spin 0.7s linear infinite; margin-right: 10px; vertical-align: middle; }
+
+/* MRR HIGHLIGHT */
+.mrr-box {
+  background: linear-gradient(135deg, rgba(29,185,84,0.08), rgba(29,185,84,0.03));
+  border: 1px solid rgba(29,185,84,0.2); border-radius: 16px;
+  padding: 28px 32px; margin-bottom: 24px;
+  display: flex; align-items: center; gap: 32px;
+}
+.mrr-label { font-size: 12px; color: var(--muted2); letter-spacing: 1px; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; }
+.mrr-val { font-family: 'Syne', sans-serif; font-size: 44px; font-weight: 800; color: var(--green); line-height: 1; }
+.mrr-sub { font-size: 12px; color: var(--muted2); margin-top: 4px; font-weight: 300; }
+.mrr-divider { width: 1px; height: 60px; background: var(--border); }
+
+/* SEARCH */
+.search-bar {
+  width: 280px; padding: 10px 16px; background: var(--bg2);
+  border: 1px solid var(--border); border-radius: 10px; color: var(--text);
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px;
+  outline: none; transition: border-color 0.2s;
+}
+.search-bar:focus { border-color: var(--green); }
+.search-bar::placeholder { color: var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-card">
+    <div class="login-logo">⚡ ShortLab AI</div>
+    <div class="login-sub">Panel de administración</div>
+    <input type="password" class="login-input" id="loginPass" placeholder="Contraseña de admin" autocomplete="current-password">
+    <button class="btn-login" id="loginBtn">Entrar al panel</button>
+    <div class="login-err" id="loginErr"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="app" id="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      ⚡ ShortLab AI
+      <span>Panel de Administración</span>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active" data-panel="dashboard">
+        <span class="nav-icon">📊</span> Dashboard
+      </div>
+      <div class="nav-item" data-panel="licencias">
+        <span class="nav-icon">🔑</span> Licencias
+      </div>
+      <div class="nav-item" data-panel="crear">
+        <span class="nav-icon">➕</span> Crear prueba
+      </div>
+      <div class="nav-item" data-panel="revocar">
+        <span class="nav-icon">❌</span> Revocar licencia
+      </div>
+      <div class="nav-item" data-panel="actualizacion">
+        <span class="nav-icon">🚀</span> Publicar actualización
+      </div>
+      <div class="nav-item" data-panel="desistimientos">
+        <span class="nav-icon">📋</span> Desistimientos
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn-logout" id="logoutBtn">🚪 Cerrar sesión</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="topbarTitle">Dashboard</div>
+      <div class="topbar-badge">Sistema operativo</div>
+    </div>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div class="panel active" id="panel-dashboard">
+        <div id="dashboard-loading" class="loading"><span class="spinner"></span>Cargando datos...</div>
+        <div id="dashboard-content" style="display:none">
+          <div class="mrr-box" id="mrr-box"></div>
+          <div class="stats-grid" id="stats-grid"></div>
+          <div class="table-wrap">
+            <div class="table-header">
+              <div class="table-title">Últimas licencias creadas</div>
+              <button class="btn-refresh" onclick="loadDashboard()">↻ Actualizar</button>
+            </div>
+            <div style="overflow-x:auto"><table>
+              <thead><tr>
+                <th>Licencia</th><th>Email</th><th>Plan</th><th>Estado</th><th>Creada</th><th>Expira</th>
+              </tr></thead>
+              <tbody id="dashboard-table"></tbody>
+            </table></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LICENCIAS -->
+      <div class="panel" id="panel-licencias">
+        <div class="table-wrap">
+          <div class="table-header">
+            <div class="table-title">Todas las licencias</div>
+            <div style="display:flex;gap:10px;align-items:center">
+              <input type="text" class="search-bar" id="searchBar" placeholder="Buscar por email o clave...">
+              <button class="btn-refresh" onclick="loadLicencias()">↻ Actualizar</button>
+            </div>
+          </div>
+          <div id="licencias-loading" class="loading"><span class="spinner"></span>Cargando...</div>
+          <div style="overflow-x:auto;display:none" id="licencias-table-wrap"><table>
+            <thead><tr>
+              <th>Licencia</th><th>Email</th><th>Plan</th><th>Estado</th><th>Creada</th><th>Expira</th><th>Último acceso</th>
+            </tr></thead>
+            <tbody id="licencias-table"></tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <!-- CREAR PRUEBA -->
+      <div class="panel" id="panel-crear">
+        <div class="form-card">
+          <h3>➕ Crear licencia de prueba</h3>
+          <p>Crea una licencia de prueba gratuita para un usuario. Se enviará automáticamente por email.</p>
+          <label class="form-label">Email del usuario</label>
+          <input type="email" class="form-input" id="crear-email" placeholder="usuario@email.com">
+          <label class="form-label">Días de prueba</label>
+          <input type="number" class="form-input" id="crear-dias" placeholder="7" value="7" style="width:120px">
+          <br>
+          <button class="btn btn-green" id="btn-crear" onclick="crearPrueba()">✅ Crear y enviar por email</button>
+          <div class="form-result" id="crear-result"></div>
+        </div>
+      </div>
+
+      <!-- REVOCAR -->
+      <div class="panel" id="panel-revocar">
+        <div class="form-card">
+          <h3>❌ Revocar licencia</h3>
+          <p>Desactiva una licencia inmediatamente. El usuario perderá el acceso al instante.</p>
+          <label class="form-label">Clave de licencia</label>
+          <input type="text" class="form-input" id="revocar-clave" placeholder="SLA-XXXXX-XXXXX-XXXXX" style="font-family:'JetBrains Mono',monospace">
+          <button class="btn btn-red" onclick="revocarLicencia()">❌ Revocar licencia</button>
+          <div class="form-result" id="revocar-result"></div>
+        </div>
+      </div>
+
+      <!-- ACTUALIZACIÓN -->
+      <div class="panel" id="panel-actualizacion">
+        <div class="form-card">
+          <h3>🚀 Publicar actualización</h3>
+          <p>Actualiza la versión, URL de descarga y precio que ven los clientes al abrir la app.</p>
+          <label class="form-label">Nueva versión</label>
+          <input type="text" class="form-input" id="act-version" placeholder="1.1.0">
+          <label class="form-label">URL de descarga</label>
+          <input type="url" class="form-input" id="act-url" placeholder="https://github.com/...">
+          <label class="form-label">Precio (€) — opcional</label>
+          <input type="number" class="form-input" id="act-precio" placeholder="7.99" step="0.01" style="width:140px">
+          <br>
+          <button class="btn btn-blue" onclick="publicarActualizacion()">🚀 Publicar</button>
+          <div class="form-result" id="act-result"></div>
+        </div>
+      </div>
+
+      <!-- DESISTIMIENTOS -->
+      <div class="panel" id="panel-desistimientos">
+        <div class="table-wrap">
+          <div class="table-header">
+            <div class="table-title">Registro de desistimientos</div>
+            <button class="btn-refresh" onclick="loadDesistimientos()">↻ Actualizar</button>
+          </div>
+          <div id="desist-loading" class="loading"><span class="spinner"></span>Cargando...</div>
+          <div style="overflow-x:auto;display:none" id="desist-table-wrap"><table>
+            <thead><tr>
+              <th>Email</th><th>Tipo</th><th>Fecha aceptación</th><th>IP</th><th>Aceptado</th>
+            </tr></thead>
+            <tbody id="desist-table"></tbody>
+          </table></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+const API = 'https://web-production-995b.up.railway.app';
+let adminPass = '';
+
+// ── LOGIN ──
+document.getElementById('loginPass').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+document.getElementById('loginBtn').addEventListener('click', doLogin);
+
+async function doLogin() {
+  const pass = document.getElementById('loginPass').value.trim();
+  const errEl = document.getElementById('loginErr');
+  if (!pass) { errEl.textContent = 'Introduce la contraseña'; return; }
+  const btn = document.getElementById('loginBtn');
+  btn.disabled = true; btn.textContent = 'Verificando...';
+  errEl.textContent = '';
+  try {
+    const res = await fetch(API + '/admin/licencias', {
+      headers: { 'X-Admin-Password': pass }
+    });
+    if (res.ok) {
+      adminPass = pass;
+      document.getElementById('loginWrap').style.display = 'none';
+      document.getElementById('app').classList.add('visible');
+      loadDashboard();
+    } else {
+      errEl.textContent = '❌ Contraseña incorrecta';
+    }
+  } catch(e) {
+    errEl.textContent = '❌ No se puede conectar al servidor';
+  } finally {
+    btn.disabled = false; btn.textContent = 'Entrar al panel';
+  }
+}
+
+// ── LOGOUT ──
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  adminPass = '';
+  document.getElementById('app').classList.remove('visible');
+  document.getElementById('loginWrap').style.display = 'flex';
+  document.getElementById('loginPass').value = '';
+});
+
+// ── NAVIGATION ──
+const titles = {
+  dashboard: 'Dashboard',
+  licencias: 'Todas las licencias',
+  crear: 'Crear licencia de prueba',
+  revocar: 'Revocar licencia',
+  actualizacion: 'Publicar actualización',
+  desistimientos: 'Registro de desistimientos'
+};
+
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const panel = item.dataset.panel;
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    item.classList.add('active');
+    document.getElementById('panel-' + panel).classList.add('active');
+    document.getElementById('topbarTitle').textContent = titles[panel] || panel;
+    if (panel === 'licencias') loadLicencias();
+    if (panel === 'desistimientos') loadDesistimientos();
+  });
+});
+
+// ── HELPERS ──
+function formatDate(str) {
+  if (!str || str === 'None' || str === 'null') return '—';
+  try {
+    return new Date(str).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  } catch { return str.slice(0, 10); }
+}
+
+function badgeEstado(estado) {
+  return `<span class="badge badge-${estado}">${estado}</span>`;
+}
+
+function badgePlan(plan) {
+  if (plan === 'pro') return `<span class="badge badge-pro">PRO</span>`;
+  return `<span class="badge badge-prueba">${plan}</span>`;
+}
+
+// ── DASHBOARD ──
+async function loadDashboard() {
+  document.getElementById('dashboard-loading').style.display = 'block';
+  document.getElementById('dashboard-content').style.display = 'none';
+  try {
+    const res = await fetch(API + '/admin/licencias', {
+      headers: { 'X-Admin-Password': adminPass }
+    });
+    const data = await res.json();
+    const licencias = Object.values(data);
+
+    const total = licencias.length;
+    const activas = licencias.filter(l => l.estado === 'activa').length;
+    const pruebas = licencias.filter(l => l.plan === 'prueba').length;
+    const pro = licencias.filter(l => l.plan === 'pro' && l.estado === 'activa').length;
+    const mrr = (pro * 7.99).toFixed(2);
+    const arr = (pro * 7.99 * 12).toFixed(2);
+
+    document.getElementById('mrr-box').innerHTML = `
+      <div>
+        <div class="mrr-label">MRR — Ingresos mensuales recurrentes</div>
+        <div class="mrr-val">€${mrr}</div>
+        <div class="mrr-sub">${pro} clientes Pro activos × 7,99€/mes</div>
+      </div>
+      <div class="mrr-divider"></div>
+      <div>
+        <div class="mrr-label">ARR — Ingresos anuales proyectados</div>
+        <div class="mrr-val" style="font-size:32px;color:var(--text)">€${arr}</div>
+        <div class="mrr-sub">Si se mantiene la base actual</div>
+      </div>
+    `;
+
+    document.getElementById('stats-grid').innerHTML = `
+      <div class="stat-card"><div class="stat-label">Total licencias</div><div class="stat-value blue">${total}</div></div>
+      <div class="stat-card"><div class="stat-label">Activas (Pro)</div><div class="stat-value green">${activas}</div></div>
+      <div class="stat-card"><div class="stat-label">En prueba</div><div class="stat-value orange">${pruebas}</div></div>
+      <div class="stat-card"><div class="stat-label">Revocadas / Exp.</div><div class="stat-value red">${total - activas - pruebas}</div></div>
+    `;
+
+    const tbody = document.getElementById('dashboard-table');
+    const recientes = licencias.slice(-10).reverse();
+    tbody.innerHTML = recientes.map(l => `
+      <tr>
+        <td>${l.clave || '—'}</td>
+        <td style="font-family:'Plus Jakarta Sans',sans-serif">${l.email || '—'}</td>
+        <td>${badgePlan(l.plan)}</td>
+        <td>${badgeEstado(l.estado)}</td>
+        <td style="font-family:'Plus Jakarta Sans',sans-serif">${formatDate(l.creada)}</td>
+        <td style="font-family:'Plus Jakarta Sans',sans-serif">${formatDate(l.expira)}</td>
+      </tr>
+    `).join('');
+
+    document.getElementById('dashboard-loading').style.display = 'none';
+    document.getElementById('dashboard-content').style.display = 'block';
+  } catch(e) {
+    document.getElementById('dashboard-loading').innerHTML = `<span style="color:var(--red)">❌ Error cargando datos: ${e.message}</span>`;
+  }
+}
+
+// ── LICENCIAS ──
+let allLicencias = [];
+
+async function loadLicencias() {
+  document.getElementById('licencias-loading').style.display = 'block';
+  document.getElementById('licencias-table-wrap').style.display = 'none';
+  try {
+    const res = await fetch(API + '/admin/licencias', {
+      headers: { 'X-Admin-Password': adminPass }
+    });
+    const data = await res.json();
+    allLicencias = Object.values(data);
+    renderLicencias(allLicencias);
+    document.getElementById('licencias-loading').style.display = 'none';
+    document.getElementById('licencias-table-wrap').style.display = 'block';
+  } catch(e) {
+    document.getElementById('licencias-loading').innerHTML = `<span style="color:var(--red)">❌ Error: ${e.message}</span>`;
+  }
+}
+
+function renderLicencias(list) {
+  const tbody = document.getElementById('licencias-table');
+  if (!list.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted2);padding:40px">Sin resultados</td></tr>'; return; }
+  tbody.innerHTML = list.map(l => `
+    <tr>
+      <td>${l.clave || '—'}</td>
+      <td style="font-family:'Plus Jakarta Sans',sans-serif">${l.email || '—'}</td>
+      <td>${badgePlan(l.plan)}</td>
+      <td>${badgeEstado(l.estado)}</td>
+      <td style="font-family:'Plus Jakarta Sans',sans-serif">${formatDate(l.creada)}</td>
+      <td style="font-family:'Plus Jakarta Sans',sans-serif">${formatDate(l.expira)}</td>
+      <td style="font-family:'Plus Jakarta Sans',sans-serif">${formatDate(l.ultimo_acceso)}</td>
+    </tr>
+  `).join('');
+}
+
+document.getElementById('searchBar').addEventListener('input', function() {
+  const q = this.value.toLowerCase();
+  const filtered = allLicencias.filter(l =>
+    (l.email || '').toLowerCase().includes(q) ||
+    (l.clave || '').toLowerCase().includes(q)
+  );
+  renderLicencias(filtered);
+});
+
+// ── CREAR PRUEBA ──
+async function crearPrueba() {
+  const email = document.getElementById('crear-email').value.trim();
+  const dias = parseInt(document.getElementById('crear-dias').value) || 7;
+  const res_el = document.getElementById('crear-result');
+  if (!email) { showResult(res_el, 'err', 'Introduce un email'); return; }
+  const btn = document.getElementById('btn-crear');
+  btn.disabled = true; btn.textContent = '⏳ Creando...';
+  try {
+    const res = await fetch(API + '/admin/crear_prueba', {
+      method: 'POST',
+      headers: { 'X-Admin-Password': adminPass, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, dias })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      showResult(res_el, 'ok', `✅ Licencia creada: ${data.licencia}\nEmail enviado a: ${data.email} (${data.dias} días)`);
+      document.getElementById('crear-email').value = '';
+    } else {
+      showResult(res_el, 'err', data.error || 'Error al crear la licencia');
+    }
+  } catch(e) {
+    showResult(res_el, 'err', 'Error de conexión: ' + e.message);
+  } finally {
+    btn.disabled = false; btn.textContent = '✅ Crear y enviar por email';
+  }
+}
+
+// ── REVOCAR ──
+async function revocarLicencia() {
+  const clave = document.getElementById('revocar-clave').value.trim().toUpperCase();
+  const res_el = document.getElementById('revocar-result');
+  if (!clave) { showResult(res_el, 'err', 'Introduce la clave de licencia'); return; }
+  if (!confirm(`¿Seguro que quieres revocar la licencia ${clave}?\n\nEl usuario perderá el acceso inmediatamente.`)) return;
+  try {
+    const res = await fetch(API + '/admin/revocar', {
+      method: 'POST',
+      headers: { 'X-Admin-Password': adminPass, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ licencia: clave })
+    });
+    const data = await res.json();
+    if (res.ok && data.ok) {
+      showResult(res_el, 'ok', `✅ Licencia ${clave} revocada correctamente`);
+      document.getElementById('revocar-clave').value = '';
+    } else {
+      showResult(res_el, 'err', data.error || 'Licencia no encontrada');
+    }
+  } catch(e) {
+    showResult(res_el, 'err', 'Error de conexión: ' + e.message);
+  }
+}
+
+// ── ACTUALIZACIÓN ──
+async function publicarActualizacion() {
+  const version = document.getElementById('act-version').value.trim();
+  const url = document.getElementById('act-url').value.trim();
+  const precio = document.getElementById('act-precio').value.trim();
+  const res_el = document.getElementById('act-result');
+  const body = {};
+  if (version) body.version = version;
+  if (url) body.descarga_url = url;
+  if (precio) body.precio = parseFloat(precio);
+  if (!Object.keys(body).length) { showResult(res_el, 'err', 'Rellena al menos un campo'); return; }
+  try {
+    const res = await fetch(API + '/admin/actualizar_config', {
+      method: 'POST',
+      headers: { 'X-Admin-Password': adminPass, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+    if (res.ok && data.ok) {
+      showResult(res_el, 'ok', `✅ Configuración actualizada.\nTodos los clientes verán los cambios al reiniciar la app.`);
+    } else {
+      showResult(res_el, 'err', data.error || 'Error al actualizar');
+    }
+  } catch(e) {
+    showResult(res_el, 'err', 'Error de conexión: ' + e.message);
+  }
+}
+
+// ── DESISTIMIENTOS ──
+async function loadDesistimientos() {
+  document.getElementById('desist-loading').style.display = 'block';
+  document.getElementById('desist-table-wrap').style.display = 'none';
+  try {
+    const res = await fetch(API + '/admin/clientes', {
+      headers: { 'X-Admin-Password': adminPass }
+    });
+    const data = await res.json();
+    // Reutilizamos /admin/clientes para mostrar info, y también intentamos desistimientos
+    const desRes = await fetch(API + '/admin/desistimientos', {
+      headers: { 'X-Admin-Password': adminPass }
+    });
+    if (desRes.ok) {
+      const desData = await desRes.json();
+      const tbody = document.getElementById('desist-table');
+      const list = desData.desistimientos || [];
+      if (!list.length) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted2);padding:40px">Sin registros aún</td></tr>';
+      } else {
+        tbody.innerHTML = list.map(d => `
+          <tr>
+            <td style="font-family:'Plus Jakarta Sans',sans-serif">${d.email || '—'}</td>
+            <td><span class="badge ${d.tipo === 'pago' ? 'badge-pro' : 'badge-prueba'}">${d.tipo}</span></td>
+            <td style="font-family:'Plus Jakarta Sans',sans-serif">${formatDate(d.fecha_aceptacion)}</td>
+            <td>${d.ip_cliente || '—'}</td>
+            <td><span class="badge badge-activa">✓ Sí</span></td>
+          </tr>
+        `).join('');
+      }
+    } else {
+      document.getElementById('desist-table').innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted2);padding:40px">Endpoint /admin/desistimientos no disponible aún</td></tr>';
+    }
+    document.getElementById('desist-loading').style.display = 'none';
+    document.getElementById('desist-table-wrap').style.display = 'block';
+  } catch(e) {
+    document.getElementById('desist-loading').innerHTML = `<span style="color:var(--red)">❌ Error: ${e.message}</span>`;
+  }
+}
+
+// ── HELPER ──
+function showResult(el, type, text) {
+  el.className = 'form-result ' + type;
+  el.textContent = text;
+  el.style.display = 'block';
+}
+</script>
+</body>
+</html>
