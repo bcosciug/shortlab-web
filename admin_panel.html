@@ -354,7 +354,7 @@ tbody tr:last-child td { border-bottom: none; }
           <label class="form-label">URL de descarga</label>
           <input type="url" class="form-input" id="act-url" placeholder="https://github.com/...">
           <label class="form-label">Precio (€) — opcional</label>
-          <input type="number" class="form-input" id="act-precio" placeholder="7.99" step="0.01" style="width:140px">
+          <input type="number" class="form-input" id="act-precio" placeholder="15" step="0.01" style="width:140px">
           <br>
           <button class="btn btn-blue" onclick="publicarActualizacion()">🚀 Publicar</button>
           <div class="form-result" id="act-result"></div>
@@ -481,14 +481,14 @@ async function loadDashboard() {
     const activas = licencias.filter(l => l.estado === 'activa').length;
     const pruebas = licencias.filter(l => l.plan === 'prueba').length;
     const pro = licencias.filter(l => l.plan === 'pro' && l.estado === 'activa').length;
-    const mrr = (pro * 7.99).toFixed(2);
-    const arr = (pro * 7.99 * 12).toFixed(2);
+    const mrr = (pro * 15).toFixed(2);
+    const arr = (pro * 15 * 12).toFixed(2);
 
     document.getElementById('mrr-box').innerHTML = `
       <div>
         <div class="mrr-label">MRR — Ingresos mensuales recurrentes</div>
         <div class="mrr-val">€${mrr}</div>
-        <div class="mrr-sub">${pro} clientes Pro activos × 7,99€/mes</div>
+        <div class="mrr-sub">${pro} clientes Pro activos × 15€/mes</div>
       </div>
       <div class="mrr-divider"></div>
       <div>
@@ -655,11 +655,6 @@ async function loadDesistimientos() {
   document.getElementById('desist-loading').style.display = 'block';
   document.getElementById('desist-table-wrap').style.display = 'none';
   try {
-    const res = await fetch(API + '/admin/clientes', {
-      headers: { 'X-Admin-Password': adminPass }
-    });
-    const data = await res.json();
-    // Reutilizamos /admin/clientes para mostrar info, y también intentamos desistimientos
     const desRes = await fetch(API + '/admin/desistimientos', {
       headers: { 'X-Admin-Password': adminPass }
     });
@@ -674,7 +669,7 @@ async function loadDesistimientos() {
           <tr>
             <td style="font-family:'Plus Jakarta Sans',sans-serif">${d.email || '—'}</td>
             <td><span class="badge ${d.tipo === 'pago' ? 'badge-pro' : 'badge-prueba'}">${d.tipo}</span></td>
-            <td style="font-family:'Plus Jakarta Sans',sans-serif">${formatDate(d.fecha_aceptacion)}</td>
+            <td style="font-family:'Plus Jakarta Sans',sans-serif">${formatDate(d.fecha)}</td>
             <td>${d.ip_cliente || '—'}</td>
             <td><span class="badge badge-activa">✓ Sí</span></td>
           </tr>
