@@ -506,63 +506,6 @@ h2 em { font-style:normal; color: var(--green); }
 }
 
 /* =============================================
-   TESTIMONIALS
-============================================= */
-.testimonials-section {
-  padding: 120px 0; overflow: hidden;
-}
-.testimonials-inner { max-width: 1140px; margin: 0 auto; padding: 0 60px; }
-.testi-track-wrap { overflow: hidden; margin-top: 60px; cursor: grab; }
-.testi-track-wrap:active { cursor: grabbing; }
-.testi-track {
-  display: flex; gap: 24px;
-  transition: transform 0.5s var(--transition);
-  will-change: transform;
-}
-.testi-card {
-  min-width: 380px; max-width: 380px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 36px;
-  position: relative; overflow: hidden;
-  transition: border-color 0.3s, transform 0.3s;
-  flex-shrink: 0;
-}
-.testi-card:hover { border-color: var(--border-green); transform: translateY(-4px); }
-.testi-card::before {
-  content: '"';
-  position: absolute; top: 20px; right: 30px;
-  font-family: 'Syne', sans-serif; font-size: 80px;
-  color: var(--green-dim); line-height: 1; pointer-events: none;
-}
-.testi-stars { display: flex; gap: 4px; margin-bottom: 18px; color: var(--green); font-size: 14px; }
-.testi-text {
-  font-size: 15px; color: var(--muted2); line-height: 1.75;
-  font-weight: 300; margin-bottom: 28px;
-}
-.testi-author { display: flex; align-items: center; gap: 14px; }
-.testi-avatar {
-  width: 44px; height: 44px; border-radius: 50%;
-  background: var(--green-dim); border: 2px solid var(--border-green);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Syne', sans-serif; font-weight: 800;
-  font-size: 16px; color: var(--green); flex-shrink: 0;
-}
-.testi-name { font-weight: 600; font-size: 14.5px; color: var(--text); }
-.testi-role { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
-.testi-controls {
-  display: flex; gap: 12px; margin-top: 40px;
-  padding: 0 60px;
-}
-.testi-btn {
-  width: 44px; height: 44px;
-  background: var(--bg3); border: 1px solid var(--border);
-  border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  cursor: none; color: var(--muted2); transition: all 0.2s;
-}
-.testi-btn:hover { border-color: var(--green); color: var(--green); }
-
-/* =============================================
    PRICING
 ============================================= */
 .pricing-section { padding: 120px 0; width: 100%; }
@@ -885,7 +828,7 @@ footer {
   body { cursor: auto; }
   #cursor, #cursor-ring { display: none; }
   .btn-primary, .btn-ghost, .btn-nav, .btn-secondary,
-  .theme-toggle, .faq-q, .testi-btn, .menu-hamburger { cursor: pointer; }
+  .theme-toggle, .faq-q, .menu-hamburger { cursor: pointer; }
 }
 
 @media (max-width: 600px) {
@@ -904,7 +847,6 @@ footer {
   .faq-section, .cta-section { padding: 48px 0; }
   .section-inner, .footer-inner { padding: 0 16px !important; }
   .section-tag { font-size: 11px; }
-  .testi-card { min-width: 280px; max-width: 280px; }
   .pricing-card-main { padding: 28px 20px; }
   .cta-inner { padding: 40px 20px; }
   .footer-top { gap: 32px; }
@@ -1184,17 +1126,6 @@ footer {
 .feature-card:hover .feature-icon {
   transform: scale(1.18) rotate(-6deg);
   background: rgba(29,185,84,0.28);
-}
-
-/* =============================================
-   TESTIMONIAL CARDS — HOVER
-============================================= */
-.testi-card {
-  transition: transform 0.38s cubic-bezier(0.34,1.3,0.64,1), box-shadow 0.38s;
-}
-.testi-card:hover {
-  transform: translateY(-9px) scale(1.015);
-  box-shadow: 0 30px 75px rgba(0,0,0,0.5), 0 0 45px rgba(29,185,84,0.1);
 }
 
 /* =============================================
@@ -1586,90 +1517,6 @@ footer {
     </div>
   </div>
 </div></section>
-
-<!-- =============================================
-     TESTIMONIALS
-============================================= -->
-<div class="testimonials-section">
-  <div class="testimonials-inner">
-    <div class="section-tag reveal" data-i18n="tag_testi">Testimonios</div>
-    <h2 class="reveal" data-i18n="testi_h2">Lo que dicen nuestros<br><em>primeros usuarios</em></h2>
-  </div>
-
-  <div class="testi-track-wrap" id="testiWrap">
-    <div class="testi-track" id="testiTrack">
-
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"Llevaba meses queriendo arrancar un canal pero nunca encontraba tiempo. Con ShortLab lo configuré una tarde y al día siguiente ya tenía dos vídeos subidos. Increíble."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">M</div>
-          <div>
-            <div class="testi-name">Miguel R.</div>
-            <div class="testi-role">Emprendedor digital · Madrid</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"Gestiono 3 canales para clientes y ShortLab me ha ahorrado literalmente horas cada semana. El producto funciona de verdad, no es humo. La calidad del vídeo sorprende."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">L</div>
-          <div>
-            <div class="testi-name">Laura G.</div>
-            <div class="testi-role">Social Media Manager · Barcelona</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"La voz suena natural, los subtítulos están perfectamente sincronizados y la app es súper fácil. Por 15€ no existe nada igual en el mercado en español."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">C</div>
-          <div>
-            <div class="testi-name">Carlos M.</div>
-            <div class="testi-role">YouTuber · México DF</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testi-card">
-        <div class="testi-stars">★★★★☆</div>
-        <p class="testi-text">"Me costó un poco la configuración inicial con las APIs, pero el equipo me ayudó por email en menos de una hora. Desde entonces funciona solo cada mañana."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">A</div>
-          <div>
-            <div class="testi-name">Ana P.</div>
-            <div class="testi-role">Profesora online · Bogotá</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"Tenía dudas de si el contenido iba a sonar robótico. Para nada. Los guiones tienen gancho y la voz es fluida. Mi canal ha pasado de 0 a publicar todos los días."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">J</div>
-          <div>
-            <div class="testi-name">Javier T.</div>
-            <div class="testi-role">Creador de contenido · Sevilla</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-  <div class="testi-controls">
-    <button class="testi-btn" id="testiPrev" aria-label="Anterior">
-      <i data-lucide="chevron-left" width="18" height="18"></i>
-    </button>
-    <button class="testi-btn" id="testiNext" aria-label="Siguiente">
-      <i data-lucide="chevron-right" width="18" height="18"></i>
-    </button>
-  </div>
-</div>
 
 <!-- =============================================
      PRICING
@@ -2186,40 +2033,6 @@ document.querySelectorAll('.feature-card').forEach(card => {
   });
 });
 
-// ── Testimonials Slider ──
-const track = document.getElementById('testiTrack');
-const wrap = document.getElementById('testiWrap');
-const cards = track.querySelectorAll('.testi-card');
-const cardW = 380 + 24; // width + gap
-let current = 0;
-
-function slideTo(n) {
-  current = Math.max(0, Math.min(n, cards.length - 1));
-  track.style.transform = `translateX(-${current * cardW}px)`;
-}
-
-document.getElementById('testiPrev').addEventListener('click', () => slideTo(current - 1));
-document.getElementById('testiNext').addEventListener('click', () => slideTo(current + 1));
-
-// Touch/drag on mobile
-let startX = 0, isDragging = false;
-wrap.addEventListener('mousedown', e => { startX = e.clientX; isDragging = true; });
-wrap.addEventListener('mousemove', e => { if (!isDragging) return; });
-wrap.addEventListener('mouseup', e => {
-  if (!isDragging) return;
-  const diff = e.clientX - startX;
-  if (Math.abs(diff) > 50) slideTo(diff < 0 ? current + 1 : current - 1);
-  isDragging = false;
-});
-wrap.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-wrap.addEventListener('touchend', e => {
-  const diff = e.changedTouches[0].clientX - startX;
-  if (Math.abs(diff) > 50) slideTo(diff < 0 ? current + 1 : current - 1);
-});
-
-// Auto-advance testimonials
-setInterval(() => slideTo(current + 1 < cards.length ? current + 1 : 0), 5000);
-
 // ── FAQ Accordion ──
 document.querySelectorAll('.faq-q').forEach(q => {
   q.addEventListener('click', () => {
@@ -2538,8 +2351,6 @@ const translations = {
     features_h2: "Todo lo que necesitas para<br><em>crecer en YouTube</em>",
     tag_how: "Cómo funciona",
     how_h2: "De cero a vídeo publicado<br><em>en minutos</em>",
-    tag_testi: "Testimonios",
-    testi_h2: "Lo que dicen nuestros<br><em>primeros usuarios</em>",
     tag_price: "Precio",
   },
   en: {
@@ -2562,8 +2373,6 @@ const translations = {
     features_h2: "Everything you need to<br><em>grow on YouTube</em>",
     tag_how: "How it works",
     how_h2: "From zero to published video<br><em>in minutes</em>",
-    tag_testi: "Testimonials",
-    testi_h2: "What our<br><em>first users say</em>",
     tag_price: "Pricing",
   }
 };
@@ -2659,12 +2468,6 @@ document.getElementById('langToggle').addEventListener('click', () => {
     { opacity: 1, y: 0, scale: 1, duration: 0.75, stagger: { each: 0.1, from: 'start' }, ease: 'power2.out',
       scrollTrigger: { trigger: '.features-grid', start: 'top 82%', once: true } });
 
-  // ── 5. Testimonial cards ────────────────────────────
-  gsap.fromTo('.testi-card',
-    { opacity: 0, y: 60, scale: 0.93 },
-    { opacity: 1, y: 0, scale: 1, duration: 0.75, stagger: 0.1, ease: 'power2.out',
-      scrollTrigger: { trigger: '.testi-track-wrap', start: 'top 85%', once: true } });
-
   // ── 6. Pricing card dramatic entrance ───────────────
   gsap.fromTo('.pricing-card-main',
     { opacity: 0, y: 90, scale: 0.88, rotationX: 10 },
@@ -2749,7 +2552,7 @@ document.getElementById('langToggle').addEventListener('click', () => {
   // ── 15. Cursor expand on interactivos ────────────────
   const curEl = document.getElementById('cursor');
   const ringEl = document.getElementById('cursor-ring');
-  document.querySelectorAll('a, button, .faq-q, .testi-btn, .portal-tab').forEach(el => {
+  document.querySelectorAll('a, button, .faq-q, .portal-tab').forEach(el => {
     el.addEventListener('mouseenter', () => {
       if (curEl) gsap.to(curEl, { scale: 2.2, duration: 0.3, ease: 'power2.out' });
       if (ringEl) gsap.to(ringEl, { width: 68, height: 68, borderColor: 'var(--green)', duration: 0.3, ease: 'power2.out' });
